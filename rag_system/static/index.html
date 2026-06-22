@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fireworks Agentic RAG - 10-K Research Assistant</title>
+<style>
+  :root {
+    --bg: #0b0d12;
+    --surface: #141820;
+    --surface-2: #1c2230;
+    --border: #2a3142;
+    --text: #e8ecf4;
+    --muted: #8b95a8;
+    --accent: #ff6b35;
+    --accent-2: #f7931e;
+    --sql: #60a5fa;
+    --sql-bg: #152238;
+    --pdf: #c084fc;
+    --pdf-bg: #231a33;
+    --success: #34d399;
+    --danger: #f87171;
+    --radius: 12px;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  header {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 10;
+  }
+
+  .logo {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+    color: white;
+    box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35);
+  }
+
+  .brand h1 { font-size: 15px; font-weight: 650; color: #fff; letter-spacing: -0.01em; }
+  .brand p { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+  .header-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+
+  .status-dot.ok { background: var(--success); box-shadow: 0 0 8px rgba(52, 211, 153, 0.6); }
+  .status-dot.err { background: var(--danger); }
+
+  .icon-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .icon-btn:hover { color: var(--text); border-color: #3d465c; }
+
+  .sidebar {
+    grid-row: 2;
+    grid-column: 1;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow: hidden;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: 0;
+  }
+
+  .sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-section.coverage {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-section.samples {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .section-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: inherit;
+    text-align: left;
+    flex-shrink: 0;
+  }
+
+  .section-toggle h3 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .section-toggle .chevron {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .sidebar-section.collapsed .section-toggle .chevron {
+    transform: rotate(-90deg);
+  }
+
+  .sidebar-section.collapsed .sample-list {
+    display: none;
+  }
+
+  .sidebar-section.samples.collapsed {
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .sidebar-section h3 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+
+  .company-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .company-chip {
+    text-align: center;
+    font-size: 11px;
+    padding: 6px 4px;
+    border-radius: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .sample-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+  }
+
+  .sample-q {
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.45;
+    padding: 9px 10px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: #b8c0d0;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    font-family: inherit;
+  }
+
+  .sample-q:hover {
+    border-color: rgba(255, 107, 53, 0.5);
+    color: #fff;
+    background: #1f2636;
+  }
+
+  .sample-q .tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .tag-sql { background: var(--sql-bg); color: var(--sql); }
+  .tag-pdf { background: var(--pdf-bg); color: var(--pdf); }
+  .tag-both { background: #1a2a1f; color: #86efac; }
+
+  .sidebar-note {
+    font-size: 11px;
+    line-height: 1.5;
+    color: #5c667a;
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    margin-top: 14px;
+    flex-shrink: 0;
+  }
+
+  .main {
+    grid-row: 2;
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 107, 53, 0.08), transparent),
+      var(--bg);
+  }
+
+  .chat-container {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .empty-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .empty-state h2 {
+    font-size: 22px;
+    font-weight: 650;
+    color: #c5cdd9;
+    letter-spacing: -0.02em;
+  }
+
+  .empty-state p {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 420px;
+    line-height: 1.55;
+  }
+
+  .capability-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cap-badge {
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+  }
+
+  .message {
+    max-width: 780px;
+    width: 100%;
+    margin: 0 auto;
+    animation: fadeUp 0.25s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.user { align-self: flex-end; }
+
+  .message-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    padding: 0 2px;
+  }
+
+  .message.user .message-header { justify-content: flex-end; }
+
+  .message-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .message-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .message:hover .message-actions { opacity: 1; }
+
+  .msg-action {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 11px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .msg-action:hover { color: var(--text); background: var(--surface-2); }
+
+  .bubble {
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    line-height: 1.65;
+    font-size: 14px;
+  }
+
+  .user .bubble {
+    background: linear-gradient(135deg, #1a3555, #1e3f66);
+    color: #dcecff;
+    border-bottom-right-radius: 4px;
+    box-shadow: var(--shadow);
+  }
+
+  .assistant .bubble {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+  }
+
+  .bubble p { margin: 0 0 10px; }
+  .bubble p:last-child { margin-bottom: 0; }
+
+  .bubble ul, .bubble ol {
+    margin: 8px 0 10px;
+    padding-left: 1.4em;
+  }
+
+  .bubble li { margin-bottom: 6px; }
+  .bubble li:last-child { margin-bottom: 0; }
+
+  .bubble strong { color: #fff; font-weight: 600; }
+  .bubble code {
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 12px;
+    background: var(--bg);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: var(--sql);
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .meta-chip {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 14px;
+    font-weight: 500;
+  }
+
+  .meta-chip.sql { background: var(--sql-bg); color: var(--sql); border: 1px solid #254060; }
+  .meta-chip.pdf { background: var(--pdf-bg); color: var(--pdf); border: 1px solid #3b2a55; }
+
+  .evidence-panel {
+    margin-top: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface-2);
+  }
+
+  .evidence-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .evidence-toggle:hover { color: var(--text); background: rgba(255,255,255,0.02); }
+
+  .evidence-toggle .chevron {
+    transition: transform 0.2s;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--muted);
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+
+  .evidence-panel.open .chevron { transform: rotate(180deg); }
+
+  .evidence-body {
+    display: none;
+    padding: 0 12px 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .evidence-panel.open .evidence-body { display: block; }
+
+  .evidence-section { margin-top: 10px; }
+
+  .evidence-section h4 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .sql-block {
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    color: #9ec5fe;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  .pdf-ref {
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    margin-bottom: 6px;
+    line-height: 1.45;
+  }
+
+  .pdf-ref .ref-title { color: var(--pdf); font-weight: 600; font-size: 11px; }
+  .pdf-ref .ref-snippet { color: var(--muted); font-size: 11px; margin-top: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .routing-note {
+    font-size: 11px;
+    color: #6b7589;
+    line-height: 1.5;
+    font-style: italic;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+
+  .thinking {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 780px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .thinking-steps { display: flex; flex-direction: column; gap: 4px; }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #5c667a;
+  }
+
+  .step.active { color: var(--accent); }
+  .step.done { color: var(--success); }
+
+  .step-icon {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    flex-shrink: 0;
+  }
+
+  .step.active .step-icon {
+    border-color: var(--accent);
+    background: rgba(255, 107, 53, 0.2);
+  }
+
+  .step.done .step-icon {
+    border-color: var(--success);
+    background: var(--success);
+    position: relative;
+  }
+
+  .step.done .step-icon::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 1px;
+    width: 4px;
+    height: 7px;
+    border: solid var(--bg);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .input-area {
+    flex-shrink: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 14px 20px 18px;
+  }
+
+  .input-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  textarea {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 14px;
+    padding: 12px 14px;
+    resize: none;
+    min-height: 48px;
+    max-height: 160px;
+    font-family: inherit;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  textarea:focus {
+    border-color: rgba(255, 107, 53, 0.6);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
+  }
+
+  textarea::placeholder { color: #4a5366; }
+
+  .send-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border: none;
+    border-radius: var(--radius);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0 22px;
+    cursor: pointer;
+    height: 48px;
+    white-space: nowrap;
+    transition: transform 0.15s, opacity 0.15s;
+    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
+  }
+
+  .send-btn:hover:not(:disabled) { transform: translateY(-1px); }
+  .send-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+  .input-hint {
+    font-size: 11px;
+    color: #4a5366;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .input-hint kbd {
+    font-family: inherit;
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 13px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 100;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (max-width: 860px) {
+    .app {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr;
+    }
+    .sidebar {
+      grid-row: 2;
+      grid-column: 1;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      max-height: 280px;
+      padding: 12px;
+    }
+    .main {
+      grid-row: 3;
+      grid-column: 1;
+    }
+    .sidebar-note { display: none; }
+    .sidebar-section.coverage {
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+    .sample-list {
+      max-height: 180px;
+    }
+    .sample-q { min-width: 0; }
+    .chat-container { padding: 16px; }
+    .message-actions { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <div class="logo">FW</div>
+    <div class="brand">
+      <h1>10-K Research Assistant</h1>
+      <p>Agentic RAG over Apple, Microsoft, Alphabet FY2024-2025</p>
+    </div>
+    <div class="header-actions">
+      <div class="status-pill" id="healthPill" title="Server status">
+        <span class="status-dot" id="healthDot"></span>
+        <span id="healthText">Checking...</span>
+      </div>
+      <button class="icon-btn" onclick="clearChat()" title="Start new conversation">New chat</button>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-section coverage">
+      <h3>Coverage</h3>
+      <div class="company-grid">
+        <div class="company-chip">AAPL</div>
+        <div class="company-chip">MSFT</div>
+        <div class="company-chip">GOOGL</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section samples" id="samplesSection">
+      <button type="button" class="section-toggle" id="samplesToggle" aria-expanded="true">
+        <h3>Sample questions</h3>
+        <span class="chevron" aria-hidden="true"></span>
+      </button>
+      <div class="sample-list" id="samples"></div>
+    </div>
+
+    <p class="sidebar-note">
+      The agent routes each question to SQL (structured financials) or 10-K PDF retrieval automatically.
+    </p>
+  </aside>
+
+  <main class="main">
+    <div class="chat-container" id="chat">
+      <div class="empty-state" id="empty">
+        <div class="empty-icon">10-K</div>
+        <h2>Ask anything about the filings</h2>
+        <p>Revenue, segments, risk factors, growth rates, and cross-company comparisons - grounded in SQL data and 10-K narrative.</p>
+        <div class="capability-row">
+          <span class="cap-badge">Financial DB</span>
+          <span class="cap-badge">10-K PDFs</span>
+          <span class="cap-badge">Auto-routing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-wrap">
+        <div class="input-row">
+          <textarea id="input" placeholder="e.g. What were Apple's supply chain risk factors in FY2025?" rows="1"
+            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendQuestion()">Ask</button>
+        </div>
+        <p class="input-hint"><kbd>Enter</kbd> to send, <kbd>Shift</kbd>+<kbd>Enter</kbd> for new line</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const SAMPLES = [
+    { q: "What was Apple's total net revenue in fiscal year 2025?", tag: "sql", label: "SQL" },
+    { q: "What were the primary risk factors Apple disclosed related to its supply chain in its fiscal year 2025 10-K filing?", tag: "pdf", label: "PDF" },
+    { q: "Which company had the fastest revenue growth rate between their two most recent fiscal years, and what was the growth rate?", tag: "sql", label: "SQL" },
+    { q: "Microsoft restructured its segment reporting in August 2024. How are the three segments defined in the fiscal year 2025 10-K, and what was the revenue for each?", tag: "both", label: "SQL+PDF" },
+    { q: "According to Alphabet's 10-K filings, what are the key components of 'Google Services' revenue, and how did YouTube advertising revenue change between FY2024 and FY2025?", tag: "pdf", label: "PDF" },
+    { q: "Which company has the highest current ratio (current assets / current liabilities) in their most recent fiscal year?", tag: "sql", label: "SQL" },
+    { q: "Across all three companies, which saw the largest absolute dollar increase in revenue between their two most recent fiscal years? Break down how much of that increase came from each business segment.", tag: "sql", label: "SQL" },
+    { q: "Apple's Services segment has been growing as a share of total revenue. Calculate the Services revenue growth rate for each of the last two years, compare it to iPhone revenue growth, and find what Apple's 10-K says about the strategic importance of Services.", tag: "both", label: "SQL+PDF" },
+  ];
+
+  const chat = document.getElementById('chat');
+  const input = document.getElementById('input');
+  const sendBtn = document.getElementById('sendBtn');
+  const empty = document.getElementById('empty');
+  const toast = document.getElementById('toast');
+
+  function scrollChatToBottom() {
+    requestAnimationFrame(() => {
+      chat.scrollTop = chat.scrollHeight;
+    });
+  }
+
+  function initSamples() {
+    const container = document.getElementById('samples');
+    const section = document.getElementById('samplesSection');
+    const toggle = document.getElementById('samplesToggle');
+
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const collapsed = section.classList.toggle('collapsed');
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    });
+
+    SAMPLES.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'sample-q';
+      btn.type = 'button';
+      const tagClass = s.tag === 'both' ? 'tag-both' : `tag-${s.tag}`;
+      btn.innerHTML = `<span class="tag ${tagClass}">${s.label}</span>${escapeHtml(s.q)}`;
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        fillQuestion(s.q);
+      });
+      container.appendChild(btn);
+    });
+  }
+
+  function escapeHtml(text) {
+    const d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+  }
+
+  function formatMarkdown(text) {
+    const escaped = escapeHtml(text);
+    const lines = escaped.split('\n');
+    const out = [];
+    let inList = false;
+    let listType = null;
+
+    function closeList() {
+      if (inList) {
+        out.push(listType === 'ol' ? '</ol>' : '</ul>');
+        inList = false;
+        listType = null;
+      }
+    }
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+
+      if (/^[-*]\s+/.test(trimmed)) {
+        if (!inList || listType !== 'ul') {
+          closeList();
+          out.push('<ul>');
+          inList = true;
+          listType = 'ul';
+        }
+        out.push('<li>' + inlineFormat(trimmed.replace(/^[-*]\s+/, '')) + '</li>');
+        continue;
+      }
+
+      if (/^\d+\.\s+/.test(trimmed)) {
+        if (!inList || listType !== 'ol') {
+          closeList();
+          out.push('<ol>');
+          inList = true;
+          listType = 'ol';
+        }
+        out.push('<li>' + inlineFormat(trimmed.replace(/^\d+\.\s+/, '')) + '</li>');
+        continue;
+      }
+
+      closeList();
+      if (trimmed === '') {
+        out.push('<br>');
+      } else {
+        out.push('<p>' + inlineFormat(trimmed) + '</p>');
+      }
+    }
+
+    closeList();
+    return out.join('');
+  }
+
+  function inlineFormat(text) {
+    return text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendQuestion();
+    }
+  }
+
+  function fillQuestion(q) {
+    input.value = q;
+    autoResize(input);
+    input.focus();
+  }
+
+  function clearChat() {
+    chat.innerHTML = '';
+    const state = document.createElement('div');
+    state.className = 'empty-state';
+    state.id = 'empty';
+    state.innerHTML = `
+      <div class="empty-icon">10-K</div>
+      <h2>Ask anything about the filings</h2>
+      <p>Revenue, segments, risk factors, growth rates, and cross-company comparisons - grounded in SQL data and 10-K narrative.</p>
+      <div class="capability-row">
+        <span class="cap-badge">Financial DB</span>
+        <span class="cap-badge">10-K PDFs</span>
+        <span class="cap-badge">Auto-routing</span>
+      </div>`;
+    chat.appendChild(state);
+    input.focus();
+  }
+
+  function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+  }
+
+  function buildMetaRow(diagnostics, toolCalls) {
+    const tools = diagnostics?.tools_used || [];
+    const row = document.createElement('div');
+    row.className = 'meta-row';
+    const seen = new Set();
+
+    tools.forEach(t => {
+      if (seen.has(t)) return;
+      seen.add(t);
+      const chip = document.createElement('span');
+      chip.className = `meta-chip ${t}`;
+      chip.textContent = t === 'sql' ? 'SQL Database' : '10-K PDFs';
+      row.appendChild(chip);
+    });
+
+    if (toolCalls?.length) {
+      const count = document.createElement('span');
+      count.className = 'meta-chip';
+      count.style.cssText = 'background:var(--surface-2);color:var(--muted);border:1px solid var(--border)';
+      count.textContent = `${toolCalls.length} tool call${toolCalls.length > 1 ? 's' : ''}`;
+      row.appendChild(count);
+    }
+
+    return row.childElementCount ? row : null;
+  }
+
+  function buildEvidencePanel(sources, routing) {
+    if ((!sources || sources.length === 0) && !routing) return null;
+
+    const panel = document.createElement('div');
+    panel.className = 'evidence-panel';
+
+    const sqlSources = sources.filter(s => s.type === 'sql');
+    const pdfSources = sources.filter(s => s.type === 'pdf');
+    const pdfFiles = [...new Set(pdfSources.map(s => s.file).filter(Boolean))];
+    const count = sqlSources.length + pdfFiles.length;
+
+    const toggle = document.createElement('button');
+    toggle.className = 'evidence-toggle';
+    toggle.type = 'button';
+    toggle.innerHTML = `<span>View evidence (${count} source${count !== 1 ? 's' : ''})</span><span class="chevron"></span>`;
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      panel.classList.toggle('open');
+      scrollChatToBottom();
+    });
+    panel.appendChild(toggle);
+
+    const body = document.createElement('div');
+    body.className = 'evidence-body';
+
+    if (sqlSources.length > 0) {
+      const sec = document.createElement('div');
+      sec.className = 'evidence-section';
+      sec.innerHTML = '<h4>SQL Query</h4>';
+      const sql = sqlSources[0].sql || 'Preset query';
+      const block = document.createElement('div');
+      block.className = 'sql-block';
+      block.textContent = sql;
+      sec.appendChild(block);
+      body.appendChild(sec);
+    }
+
+    if (pdfSources.length > 0) {
+      const sec = document.createElement('div');
+      sec.className = 'evidence-section';
+      sec.innerHTML = '<h4>PDF Chunks</h4>';
+
+      const seen = new Set();
+      pdfSources.slice(0, 6).forEach(s => {
+        const key = `${s.file}|${s.section}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+
+        const ref = document.createElement('div');
+        ref.className = 'pdf-ref';
+        const ticker = (s.ticker || s.file || '').replace('_10-K.pdf', '').replace('.pdf', '');
+        const year = s.fiscal_year ? ` FY${s.fiscal_year}` : '';
+        const section = s.section || '10-K';
+        const score = s.score ? ` · score ${s.score}` : '';
+
+        ref.innerHTML = `
+          <div class="ref-title">${escapeHtml(ticker)}${escapeHtml(year)} - ${escapeHtml(section)}${escapeHtml(score)}</div>
+          ${s.text ? `<div class="ref-snippet">${escapeHtml(s.text.slice(0, 200))}</div>` : ''}`;
+        sec.appendChild(ref);
+      });
+
+      if (pdfSources.length > 6) {
+        const more = document.createElement('div');
+        more.style.cssText = 'font-size:11px;color:var(--muted);margin-top:4px';
+        more.textContent = `+ ${pdfSources.length - 6} more chunks retrieved`;
+        sec.appendChild(more);
+      }
+
+      body.appendChild(sec);
+    }
+
+    if (routing) {
+      const note = document.createElement('div');
+      note.className = 'routing-note';
+      note.textContent = routing;
+      body.appendChild(note);
+    }
+
+    panel.appendChild(body);
+    return panel;
+  }
+
+  function addMessage(role, content, meta = {}) {
+    const emptyEl = document.getElementById('empty');
+    if (emptyEl) emptyEl.remove();
+
+    const msg = document.createElement('div');
+    msg.className = `message ${role}`;
+
+    const header = document.createElement('div');
+    header.className = 'message-header';
+
+    const label = document.createElement('span');
+    label.className = 'message-label';
+    label.textContent = role === 'user' ? 'You' : 'Assistant';
+    header.appendChild(label);
+
+    if (role === 'assistant') {
+      const actions = document.createElement('div');
+      actions.className = 'message-actions';
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'msg-action';
+      copyBtn.type = 'button';
+      copyBtn.textContent = 'Copy';
+      copyBtn.onclick = () => copyText(content);
+      actions.appendChild(copyBtn);
+      header.appendChild(actions);
+    }
+
+    msg.appendChild(header);
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    if (role === 'assistant') {
+      bubble.innerHTML = formatMarkdown(content);
+    } else {
+      bubble.textContent = content;
+    }
+    msg.appendChild(bubble);
+
+    if (role === 'assistant') {
+      const metaRow = buildMetaRow(meta.diagnostics, meta.tool_calls);
+      if (metaRow) msg.appendChild(metaRow);
+
+      const evidence = buildEvidencePanel(meta.sources, meta.routing);
+      if (evidence) msg.appendChild(evidence);
+    }
+
+    chat.appendChild(msg);
+    scrollChatToBottom();
+    return msg;
+  }
+
+  function addThinking() {
+    const emptyEl = document.getElementById('empty');
+    if (emptyEl) emptyEl.remove();
+
+    const msg = document.createElement('div');
+    msg.className = 'thinking';
+    msg.id = 'thinking';
+    msg.innerHTML = `
+      <div class="spinner"></div>
+      <div class="thinking-steps">
+        <div class="step active" data-step="route"><span class="step-icon"></span> Routing question...</div>
+        <div class="step" data-step="retrieve"><span class="step-icon"></span> Retrieving evidence</div>
+        <div class="step" data-step="synth"><span class="step-icon"></span> Synthesizing answer</div>
+      </div>`;
+    chat.appendChild(msg);
+    scrollChatToBottom();
+
+    const steps = msg.querySelectorAll('.step');
+    setTimeout(() => {
+      steps[0].classList.replace('active', 'done');
+      steps[1].classList.add('active');
+    }, 800);
+    setTimeout(() => {
+      steps[1].classList.replace('active', 'done');
+      steps[2].classList.add('active');
+    }, 2000);
+
+    return msg;
+  }
+
+  async function sendQuestion() {
+    const q = input.value.trim();
+    if (!q) return;
+
+    input.value = '';
+    autoResize(input);
+    sendBtn.disabled = true;
+
+    addMessage('user', q);
+    const thinking = addThinking();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q }),
+      });
+
+      const data = await res.json();
+      thinking.remove();
+
+      if (res.ok) {
+        addMessage('assistant', data.answer || 'No answer returned.', {
+          sources: data.sources,
+          routing: data.routing,
+          tool_calls: data.tool_calls,
+          diagnostics: data.diagnostics,
+        });
+      } else {
+        addMessage('assistant', 'Error: ' + (data.detail || 'Something went wrong.'));
+      }
+    } catch (err) {
+      thinking.remove();
+      addMessage('assistant', 'Connection error. Make sure the server is running at http://localhost:8000');
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  async function checkHealth() {
+    const dot = document.getElementById('healthDot');
+    const text = document.getElementById('healthText');
+    try {
+      const res = await fetch('/health');
+      if (res.ok) {
+        dot.className = 'status-dot ok';
+        text.textContent = 'Online';
+      } else {
+        throw new Error('not ok');
+      }
+    } catch {
+      dot.className = 'status-dot err';
+      text.textContent = 'Offline';
+    }
+  }
+
+  initSamples();
+  checkHealth();
+  setInterval(checkHealth, 30000);
+</script>
+</body>
+</html>

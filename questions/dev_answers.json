@@ -1,0 +1,540 @@
+{
+  "q_001": {
+    "answer": "AAPL fiscal year 2025; revenue $416.2B (per SQL data)",
+    "sql": [
+      "SELECT company_ticker, fiscal_year, revenue FROM income_statements WHERE company_ticker = 'AAPL' AND fiscal_year = 2025 AND period_type = 'FY';"
+    ],
+    "tool_calls": [
+      {
+        "tool": "sql_query",
+        "args": {
+          "question": "What was Apple's total net revenue in fiscal year 2025?"
+        }
+      }
+    ]
+  },
+  "q_006": {
+    "answer": "Based on the provided PDF evidence, the primary risk factors Apple disclosed related to its supply chain are:\n\n*   **Reliance on single or limited sources**: The Company relies on single or limited sources for the supply and manufacture of many critical components, which exacerbates negative consequences from business interruptions [Source 3].\n*   **Supply shortages and price increases**: The Company is subject to significant risks of supply shortages and price increases. This can occur because component suppliers may fail, be subject to consolidation, or decide to concentrate on common components instead of those customized for the Company, limiting its ability to obtain sufficient quantities [Source 7].\n*   **Inability to extend or renew supplier agreements**: The Company may not be able to extend or renew agreements for the supply of components on similar terms, or at all, and may not be successful in obtaining sufficient quantities from alternative sources [Source 7].\n*   **Business interruptions affecting suppliers**: Political events, trade disputes, geopolitical tensions, natural disasters, and other business interruptions can have a material adverse effect on the Company's suppliers and contract manufacturers [Source 1].\n*   **Component defects**: Defects can exist in components the Company purchases from third parties, which could make the Company\u2019s products unsafe [Source 2].",
+    "sql": [],
+    "tool_calls": [
+      {
+        "tool": "pdf_search",
+        "args": {
+          "question": "What were the primary risk factors Apple disclosed related to its supply chain in its fiscal year 2025 10-K filing?",
+          "ticker": "AAPL",
+          "fiscal_year": "2025",
+          "section": "Risk Factors",
+          "section_code": "1A",
+          "chunk_type": "narrative"
+        }
+      }
+    ],
+    "pdf_chunks": [
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.773,
+        "text": "c conditions can also lead to increased credit and collectibility risk on the Company\u2019s trade receivables; the failure\nof derivative counterparties and other financial institutions; limitations on the Company\u2019s ability to issue new debt; reduced liquidity;\nand declines in the fair values of the Company\u2019s financial instruments. These and other impacts can materially adversely affect the\nCompany\u2019s business, results of operations, financial condition and stock price.\nApple Inc. | 2025 Form 10-K | 5\nThe Company\u2019s business can be impacted by political events, trade and other international disputes, geopolitical tensions,\nconflict, terrorism, natural disasters, public health issues, industrial accidents and other business interruptions.\nPolitical events, trade and other international disputes, geopolitical tensions, conflict, terrorism, natural disasters, public health\nissues, industrial accidents and other business interruptions can have a material adverse effect on the Company and its customers,\nemployees, suppliers, contract manufacturers, logistics providers, distributors, cellular network carriers and other channel partners.\nThe Company has a large, global business with sales outsid"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.755,
+        "text": "y affect its business, results of operations, financial condition and stock price.\nApple Inc. | 2025 Form 10-K | 8\nThe Company\u2019s products and services may be affected from time to time by design and manufacturing defects that could\nmaterially adversely affect the Company\u2019s business and result in harm to the Company\u2019s reputation.\nThe Company offers complex hardware and software products and services that can be affected by design and manufacturing\ndefects. Sophisticated operating system software and applications, such as those offered by the Company, often have issues that\ncan unexpectedly interfere with the intended operation of hardware or software products and services. Defects can also exist in\ncomponents and products the Company purchases from third parties. Component defects could make the Company\u2019s products\nunsafe and create a risk of environmental or property damage and personal injury. These risks may increase as the Company\u2019s\nproducts are introduced into specialized applications, including health. In addition, the Company\u2019s service offerings can have quality\nissues and from time to time experience outages, service slowdowns or errors. As a result, from time to time the Com"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.742,
+        "text": "reputation. Major\npublic health issues, including pandemics such as the COVID-19 pandemic, have adversely affected, and could in the future\nmaterially adversely affect, the Company due to their impact on the global economy and demand for consumer products; the\nimposition of protective public safety measures, such as stringent employee travel restrictions and limitations on freight services and\nthe movement of products between regions; and disruptions in the Company\u2019s operations, supply chain and sales and distribution\nchannels, resulting in interruptions to the supply of current products and offering of existing services, and delays in production ramps\nof new products and development of new services.\nApple Inc. | 2025 Form 10-K | 6\nFollowing any interruption to its business, the Company can require substantial recovery time, incur significant expenditures to\nresume operations, and lose significant sales. Because the Company relies on single or limited sources for the supply and\nmanufacture of many critical components, a business interruption affecting such sources would exacerbate any negative\nconsequences to the Company. While the Company maintains insurance coverage for certain"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.718,
+        "text": "market acceptance, reduced demand for products and services, lost sales, and lower profit\nmargins.\nApple Inc. | 2025 Form 10-K | 14\nThe Company\u2019s business is subject to a variety of U.S. and international laws, rules, policies and other obligations\nregarding the collection, use, protection and transfer of personal data.\nThe Company is subject to an increasing number of federal, state and international laws relating to the collection, use, retention,\nprotection and transfer of various types of personal data. In many cases, these laws apply not only to third-party transactions, but\nalso restrict transfers of personal data among the Company and its international subsidiaries. Several jurisdictions have passed laws\nin this area, and additional jurisdictions are considering imposing additional restrictions or have laws that are pending. These laws\ncontinue to develop and may be inconsistent from jurisdiction to jurisdiction. Complying with emerging and changing requirements\ncauses the Company to incur substantial costs and has required and may in the future require the Company to change its business\npractices. Noncompliance could result in significant penalties or legal liability.\nThe"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.715,
+        "text": "its goals and further its initiatives, or to align with stakeholders\u2019\nexpectations, or comply with evolving, varied and at times conflicting federal, state and international laws, executive orders,\nregulations and standards, or any failure or perceived failure to do so, can result in adverse reactions by consumers and other\nstakeholders, including the commencement of legal and regulatory proceedings against the Company, and can materially adversely\naffect the Company\u2019s business, reputation, results of operations, financial condition and stock price.\nApple Inc. | 2025 Form 10-K | 13\nThe technology industry, including, in some instances, the Company, is subject to intense media, political and regulatory\nscrutiny, which exposes the Company to increasing regulation, government investigations, legal actions and penalties.\nFrom time to time, the Company has made changes to its business, including actions taken in response to litigation, competition,\nmarket conditions and legal and regulatory requirements. The Company expects to make further business changes in the future. For\nexample, in the U.S., the Company has implemented changes to how developers communicate with consumers within app"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.712,
+        "text": "ittle to no growth or contracted overall.\nIf the Company is unable to compete successfully, its business, reputation, results of operations, financial condition and stock price\ncan be materially adversely affected.\nApple Inc. | 2025 Form 10-K | 7\nBusiness Risks\nTo remain competitive and stimulate customer demand, the Company must successfully manage frequent introductions\nand transitions of products and services.\nDue to the highly volatile and competitive nature of the markets and industries in which the Company competes, the Company must\ncontinually introduce new products, services and technologies, enhance existing products and services, effectively stimulate\ncustomer demand for new and upgraded products and services, navigate global regulatory requirements and barriers to market\naccess, and successfully manage the transition to these new and upgraded products and services. The success of new product and\nservice introductions depends on a number of factors, including the Company\u2019s ability to recruit and retain highly skilled personnel to\nexecute on its strategic initiatives, and the timely and successful development and market acceptance of new products, services and\ntechnologies"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.71,
+        "text": "straints may exist until the suppliers\u2019 yields have matured or their manufacturing\ncapacities have increased. The Company may not be able to extend or renew agreements for the supply of components on similar\nterms, or at all, and may not be successful in obtaining sufficient quantities from its suppliers in a timely manner, or in identifying and\nobtaining sufficient quantities from an alternative source. In addition, component suppliers may fail, be subject to consolidation within\na particular industry, or decide to concentrate on the production of common components instead of components customized to meet\nthe Company\u2019s requirements, further limiting the Company\u2019s ability to obtain sufficient quantities of components on commercially\nreasonable terms, or at all. Therefore, the Company remains subject to significant risks of supply shortages and price increases that\ncan materially adversely affect its business, results of operations, financial condition and stock price.\nApple Inc. | 2025 Form 10-K | 8\nThe Company\u2019s products and services may be affected from time to time by design and manufacturing defects that could\nmaterially adversely affect the Company\u2019s business and result in har"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.709,
+        "text": "s, it could materially adversely affect the\nCompany\u2019s culture, operational flexibility, strategy and costs, all of which can materially adversely affect the Company\u2019s business,\nreputation, results of operations, financial condition and stock price.\nThe Company believes that its distinctive and inclusive culture is a significant driver of its success. If the Company is unable to\nnurture its culture, it could materially adversely affect the Company\u2019s ability to recruit and retain the highly skilled employees who are\ncritical to its success, and could otherwise materially adversely affect the Company\u2019s business, reputation, results of operations,\nfinancial condition and stock price.\nApple Inc. | 2025 Form 10-K | 10\nThe Company depends on the performance of carriers and other resellers.\nThe Company distributes its products and certain of its services through cellular network carriers and other resellers, many of which\ndistribute products and services from competitors. Resellers offer financing, installment payment plans or subsidies for users\u2019\npurchases of devices, and such plans may be discontinued or modified any time.\nThe Company has invested and will continue to invest in programs"
+      }
+    ]
+  },
+  "q_008": {
+    "answer": "Microsoft (MSFT) had 51.3% of its total revenue from the United States in FY2025 (per SQL data)",
+    "sql": [
+      "SELECT gr.region, gr.revenue AS us_revenue, i.revenue AS total_revenue, ROUND(CAST(gr.revenue AS REAL) / CAST(i.revenue AS REAL) * 100, 2) AS us_pct FROM geographic_revenue gr JOIN income_statements i ON gr.company_ticker = i.company_ticker AND gr.fiscal_year = i.fiscal_year AND gr.period_type = i.period_type WHERE gr.company_ticker = 'MSFT' AND gr.fiscal_year = 2025 AND gr.period_type = 'FY' AND gr.region = 'United States';"
+    ],
+    "tool_calls": [
+      {
+        "tool": "sql_query",
+        "args": {
+          "question": "What percentage of Microsoft's total revenue came from the United States in fiscal year 2025?"
+        }
+      }
+    ]
+  },
+  "q_011": {
+    "answer": "GOOGL had the fastest revenue growth rate at 15.1%.",
+    "sql": [
+      "SELECT a.company_ticker, a.revenue AS revenue_2025, b.revenue AS revenue_2024, ROUND(CAST(a.revenue - b.revenue AS REAL) / CAST(b.revenue AS REAL) * 100, 2) AS growth_pct FROM income_statements a JOIN income_statements b ON a.company_ticker = b.company_ticker AND b.fiscal_year = 2024 AND b.period_type = 'FY' WHERE a.fiscal_year = 2025 AND a.period_type = 'FY' ORDER BY growth_pct DESC;"
+    ],
+    "tool_calls": [
+      {
+        "tool": "sql_query",
+        "args": {
+          "question": "Which company had the fastest revenue growth rate between their two most recent fiscal years, and what was the growth rate?"
+        }
+      }
+    ]
+  },
+  "q_012": {
+    "answer": "Apple\u2019s Greater China revenue fell from $67.0 billion in fiscal 2024 to $64.4 billion in fiscal 2025, a decline of about $2.6 billion (4%). The 10\u2011K explains that the decrease was primarily due to lower iPhone net sales, partially offset by higher Mac net sales.",
+    "sql": [
+      "SELECT fiscal_year, revenue FROM geographic_revenue WHERE company_ticker = 'AAPL' AND region = 'Greater China' AND period_type = 'FY' AND fiscal_year IN (2024, 2025) ORDER BY fiscal_year;"
+    ],
+    "tool_calls": [
+      {
+        "tool": "sql_query",
+        "args": {
+          "question": "How did Apple's Greater China revenue change between fiscal year 2024 and fiscal year 2025, and does the 10-K filing explain why?"
+        }
+      },
+      {
+        "tool": "pdf_search",
+        "args": {
+          "question": "How did Apple's Greater China revenue change between fiscal year 2024 and fiscal year 2025, and does the 10-K filing explain why?",
+          "ticker": "AAPL",
+          "fiscal_year": "2025",
+          "section": "MD&A",
+          "chunk_type": "narrative"
+        }
+      }
+    ],
+    "pdf_chunks": [
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.774,
+        "text": ".\nServices\nServices net sales increased during 2025 compared to 2024 primarily due to higher net sales from advertising, the App Store and\ncloud services.\nApple Inc. | 2025 Form 10-K | 23\nGross Margin\nProducts and Services gross margin and gross margin percentage for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 2024 2023\nGross margin:\nProducts $ 112,887 $ 109,633 $ 108,803\nServices 82,314 71,050 60,345\nTotal gross margin $ 195,201 $ 180,683 $ 169,148\nGross margin percentage:\nProducts 36.8% 37.2% 36.5%\nServices 75.4% 73.9% 70.8%\nTotal gross margin percentage 46.9% 46.2% 44.1%\nProducts Gross Margin\nProducts gross margin increased during 2025 compared to 2024 primarily due to favorable costs and a different mix of products,\npartially offset by tariff costs.\nProducts gross margin percentage decreased during 2025 compared to 2024 primarily due to a different mix of products and tariff\ncosts, partially offset by other favorable costs.\nServices Gross Margin\nServices gross margin increased during 2025 compared to 2024 primarily due to higher Services net sales and a different mix of\nservices.\nServices gross margin percentage increased during 2025 compared to 2024 primari"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.772,
+        "text": "unfavorable year-over-year impact on Americas net sales during\n2025.\nEurope\nEurope net sales increased during 2025 compared to 2024 primarily due to higher net sales of Services, iPhone and Mac.\nGreater China\nGreater China net sales decreased during 2025 compared to 2024 primarily due to lower net sales of iPhone, partially offset by\nhigher net sales of Mac.\nJapan\nJapan net sales increased during 2025 compared to 2024 primarily due to higher net sales of iPhone, Services and iPad.\nRest of Asia Pacific\nRest of Asia Pacific net sales increased during 2025 compared to 2024 primarily due to higher net sales of iPhone, Services and\nMac.\nApple Inc. | 2025 Form 10-K | 22\nProducts and Services Performance\nThe following table shows net sales by category for 2025, 2024 and 2023 (dollars in millions):\n2025 Change 2024 Change 2023\niPhone $ 209,586 4 % $ 201,183 \u2014 % $ 200,583\nMac 33,708 12 % 29,984 2 % 29,357\niPad 28,023 5 % 26,694 (6)% 28,300\nWearables, Home and Accessories 35,686 (4)% 37,005 (7)% 39,845\nServices (1) 109,158 14 % 96,169 13 % 85,200\nTotal net sales $ 416,161 6 % $ 391,035 2 % $ 383,285\n(1) Services net sales include amortization of the deferred value of services bundled in the"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.752,
+        "text": "ministrative $ 27,601 6 % $ 26,097 5 % $ 24,932\nPercentage of total net sales 7% 7% 7%\nTotal operating expenses $ 62,151 8 % $ 57,467 5 % $ 54,847\nPercentage of total net sales 15% 15% 14%\nResearch and Development\nThe growth in R&D expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and\ninfrastructure-related costs.\nSelling, General and Administrative\nThe growth in selling, general and administrative expense during 2025 compared to 2024 was primarily driven by increases in\nheadcount-related expenses and variable selling expenses.\nApple Inc. | 2025 Form 10-K | 24\nProvision for Income Taxes\nProvision for income taxes, effective tax rate and statutory federal income tax rate for 2025, 2024 and 2023 were as follows (dollars\nin millions):\n2025 2024 2023\nProvision for income taxes $ 20,719 $ 29,749 $ 16,741\nEffective tax rate 15.6% 24.1% 14.7%\nStatutory federal income tax rate 21% 21% 21%\nThe Company\u2019s effective tax rate for 2025 was lower than the statutory federal income tax rate primarily due to a lower effective tax\nrate on foreign earnings, including the impact of changes in unrecognized tax benefits, the impact of the U.S. federal R&"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.752,
+        "text": "Quarter 2025:\n\u2022 MacBook Pro\n\u2022 Mac mini\n\u2022 iMac\n\u2022 iPad mini\nSecond Quarter 2025:\n\u2022 iPhone 16e\n\u2022 iPad Air\n\u2022 iPad\n\u2022 MacBook Air\n\u2022 Mac Studio\nThird Quarter 2025:\n\u2022 iOS 26, macOS Tahoe 26, iPadOS 26, watchOS 26, visionOS 26 and tvOS 26\nFourth Quarter 2025:\n\u2022 iPhone 17, iPhone Air, iPhone 17 Pro and iPhone 17 Pro Max\n\u2022 Apple Watch Series 11, Apple Watch SE 3 and Apple Watch Ultra 3\n\u2022 AirPods Pro 3\nFiscal Period\nThe Company\u2019s fiscal year is the 52- or 53-week period that ends on the last Saturday of September. An additional week is included\nin the first fiscal quarter every five or six years to realign the Company\u2019s fiscal quarters with calendar quarters, which occurred in the\nfirst quarter of 2023. The Company\u2019s fiscal years 2025 and 2024 spanned 52 weeks each, whereas fiscal year 2023 spanned 53\nweeks.\nMacroeconomic Conditions\nMacroeconomic conditions, including inflation, interest rates and currency fluctuations, have directly and indirectly impacted, and\ncould in the future materially impact, the Company\u2019s results of operations and financial condition.\nApple Inc. | 2025 Form 10-K | 21\nTariffs and Other Measures\nBeginning in the second quarter of 2025, new U.S. Tariffs were announced, i"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.719,
+        "text": "Item 7. Management\u2019s Discussion and Analysis of Financial Condition and Results of Operations\nThe following discussion should be read in conjunction with the consolidated financial statements and accompanying notes included\nin Part II, Item 8 of this Form 10-K. This Item generally discusses 2025 and 2024 items and year-to-year comparisons between 2025\nand 2024. Discussions of 2023 items and year-to-year comparisons between 2024 and 2023 are not included, and can be found in\n\u201cManagement\u2019s Discussion and Analysis of Financial Condition and Results of Operations\u201d in Part II, Item 7 of the Company\u2019s Annual\nReport on Form 10-K for the fiscal year ended September 28, 2024.\nProduct, Service and Software Announcements\nThe Company announces new product, service and software offerings at various times during the year. Significant announcements\nduring fiscal year 2025 included the following:\nFirst Quarter 2025:\n\u2022 MacBook Pro\n\u2022 Mac mini\n\u2022 iMac\n\u2022 iPad mini\nSecond Quarter 2025:\n\u2022 iPhone 16e\n\u2022 iPad Air\n\u2022 iPad\n\u2022 MacBook Air\n\u2022 Mac Studio\nThird Quarter 2025:\n\u2022 iOS 26, macOS Tahoe 26, iPadOS 26, watchOS 26, visionOS 26 and tvOS 26\nFourth Quarter 2025:\n\u2022 iPhone 17, iPhone Air, iPhone 17 Pro and iPhone"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.712,
+        "text": "mpact on the overall macroeconomic environment and result in shifts and reductions in consumer\nspending and negative consumer sentiment for the Company\u2019s products and services, all of which can further adversely affect the\nCompany\u2019s business and results of operations.\nSegment Operating Performance\nThe following table shows net sales by reportable segment for 2025, 2024 and 2023 (dollars in millions):\n2025 Change 2024 Change 2023\nAmericas $ 178,353 7 % $ 167,045 3 % $ 162,560\nEurope 111,032 10 % 101,328 7 % 94,294\nGreater China 64,377 (4)% 66,952 (8)% 72,559\nJapan 28,703 15 % 25,052 3 % 24,257\nRest of Asia Pacific 33,696 10 % 30,658 4 % 29,615\nTotal net sales $ 416,161 6 % $ 391,035 2 % $ 383,285\nAmericas\nAmericas net sales increased during 2025 compared to 2024 primarily due to higher net sales of iPhone and Services. The\nweakness in foreign currencies relative to the U.S. dollar had an unfavorable year-over-year impact on Americas net sales during\n2025.\nEurope\nEurope net sales increased during 2025 compared to 2024 primarily due to higher net sales of Services, iPhone and Mac.\nGreater China\nGreater China net sales decreased during 2025 compared to 2024 primarily due to lower net s"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.712,
+        "text": "urrency fluctuations, have directly and indirectly impacted, and\ncould in the future materially impact, the Company\u2019s results of operations and financial condition.\nApple Inc. | 2025 Form 10-K | 21\nTariffs and Other Measures\nBeginning in the second quarter of 2025, new U.S. Tariffs were announced, including additional tariffs on imports from China, India,\nJapan, South Korea, Taiwan, Vietnam and the EU, among others. In response, several countries have imposed, or threatened to\nimpose, reciprocal tariffs on imports from the U.S. and other retaliatory measures. Various modifications to the U.S. Tariffs have been\nannounced and further changes could be made in the future, which may include additional sector-based tariffs or other measures.\nFor example, the U.S. Department of Commerce has initiated an investigation under Section 232 of the Trade Expansion Act of\n1962, as amended, into, among other things, imports of semiconductors, semiconductor manufacturing equipment, and their\nderivative products, including downstream products that contain semiconductors. Tariffs and other measures that are applied to the\nCompany\u2019s products or their components can have a material adverse impact on th"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.697,
+        "text": "% 29,357\niPad 28,023 5 % 26,694 (6)% 28,300\nWearables, Home and Accessories 35,686 (4)% 37,005 (7)% 39,845\nServices (1) 109,158 14 % 96,169 13 % 85,200\nTotal net sales $ 416,161 6 % $ 391,035 2 % $ 383,285\n(1) Services net sales include amortization of the deferred value of services bundled in the sales price of certain products.\niPhone\niPhone net sales increased during 2025 compared to 2024 due to higher net sales of Pro models.\nMac\nMac net sales increased during 2025 compared to 2024 primarily due to higher net sales of laptops and desktops.\niPad\niPad net sales increased during 2025 compared to 2024 primarily due to higher net sales of iPad Air, iPad mini and iPad, partially\noffset by lower net sales of iPad Pro.\nWearables, Home and Accessories\nWearables, Home and Accessories net sales decreased during 2025 compared to 2024 primarily due to lower net sales of\nAccessories and Wearables.\nServices\nServices net sales increased during 2025 compared to 2024 primarily due to higher net sales from advertising, the App Store and\ncloud services.\nApple Inc. | 2025 Form 10-K | 23\nGross Margin\nProducts and Services gross margin and gross margin percentage for 2025, 2024 and 2023 were as foll"
+      }
+    ]
+  },
+  "q_014": {
+    "answer": "The provided PDF evidence does not include detailed definitions of what each segment comprises. It only states that the three segments are **Productivity and Business Processes**, **Intelligent Cloud**, and **More Personal Computing**, and that the August 2024 restructuring notably brought the commercial components of Microsoft 365 together in the Productivity and Business Processes segment.\n\nRevenue for each segment (fiscal year 2025) from the SQL evidence:\n\n- Productivity and Business Processes: **$120.8 billion**\n- Intelligent Cloud: **$106.3 billion**\n- More Personal Computing: **$54.6 billion**",
+    "sql": [
+      "SELECT segment_name, revenue FROM segment_revenue WHERE company_ticker = 'MSFT' AND fiscal_year = 2025 AND period_type = 'FY' ORDER BY revenue DESC;"
+    ],
+    "tool_calls": [
+      {
+        "tool": "sql_query",
+        "args": {
+          "question": "Microsoft restructured its segment reporting in August 2024. How are the three segments defined in the fiscal year 2025 10-K, and what was the revenue for each?"
+        }
+      },
+      {
+        "tool": "pdf_search",
+        "args": {
+          "question": "Microsoft restructured its segment reporting in August 2024. How are the three segments defined in the fiscal year 2025 10-K, and what was the revenue for each?",
+          "ticker": "MSFT",
+          "fiscal_year": "2025"
+        }
+      }
+    ],
+    "pdf_chunks": [
+      {
+        "type": "pdf",
+        "file": "MSFT_FY2025_10-K.pdf",
+        "ticker": "MSFT",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.791,
+        "text": "based on the following segments: Productivity and Business Processes, Intelligent\nCloud, and More Personal Computing. The segment amounts included in MD&A are presented on a basis consistent\nwith our internal management reporting.\nIn August 2024, we announced changes to the composition of our segments. These changes align our segments with\nhow we currently manage our business, most notably bringing the commercial components of Microsoft 365 together in\nthe Productivity and Business Processes segment. Beginning in fiscal year 2025, the information that our chief\noperating decision maker is regularly provided and reviews for purposes of allocating resources and assessing\nperformance reflects these segment changes. Prior period segment information has been recast to conform to the way\nwe internally manage and monitor our business during fiscal year 2025.\nAdditional information on our reportable segments is contained in Note 18 \u2013 Segment Information and Geographic Data\nof the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\n36\nPART II\nItem 7\nMetrics\nWe use metrics in assessing the performance of our business and to make informed decisions regarding the allocation\nof r"
+      },
+      {
+        "type": "pdf",
+        "file": "MSFT_FY2025_10-K.pdf",
+        "ticker": "MSFT",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.763,
+        "text": "ort our financial performance using three segments: Productivity and Business\nProcesses, Intelligent Cloud, and More Personal Computing. Our segments provide management with a\ncomprehensive financial view of our key businesses. The segments enable the alignment of strategies and objectives\nacross the development, sales, marketing, and services organizations, and they provide a framework for timely and\nrational allocation of resources within businesses.\nIn August 2024, we announced changes to the composition of our segments. These changes align our segments with\nhow we currently manage our business, most notably bringing the commercial components of Microsoft 365 together in\nthe Productivity and Business Processes segment. Beginning in fiscal year 2025, the information that our chief\noperating decision maker is regularly provided and reviews for purposes of allocating resources and assessing\nperformance reflects these segment changes.\nAdditional information on our operating segments and geographic and product information is contained in Note 18 \u2013\nSegment Information and Geographic Data of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\nOur reportable segments"
+      },
+      {
+        "type": "pdf",
+        "file": "MSFT_FY2025_10-K.pdf",
+        "ticker": "MSFT",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.753,
+        "text": "t on\nForm 10-K for the year ended June 30, 2024 and our Form 8-K filed on December 3, 2024.\nOVERVIEW\nMicrosoft is a technology company committed to making digital technology and artificial intelligence (\u201cAI\u201d) available\nbroadly and doing so responsibly, with a mission to empower every person and every organization on the planet to\nachieve more. We create platforms and tools, powered by AI, that deliver innovative solutions that meet the evolving\nneeds of our customers.\nWe generate revenue by offering a wide range of cloud-based solutions, content, and other services to people and\nbusinesses; licensing and supporting an array of software products; delivering relevant online advertising to a global\naudience; and designing and selling devices. Our most significant expenses are related to compensating employees;\nsupporting and investing in our cloud-based services, including datacenter operations; designing, manufacturing,\nmarketing, and selling our other products and services; and income taxes.\nHighlights from fiscal year 2025 compared with fiscal year 2024 included:\n\u2022 Microsoft Cloud revenue increased 23% to $168.9 billion.\n\u2022 Microsoft 365 Commercial products and cloud services revenu"
+      },
+      {
+        "type": "pdf",
+        "file": "MSFT_FY2025_10-K.pdf",
+        "ticker": "MSFT",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.752,
+        "text": "ions; designing, manufacturing,\nmarketing, and selling our other products and services; and income taxes.\nHighlights from fiscal year 2025 compared with fiscal year 2024 included:\n\u2022 Microsoft Cloud revenue increased 23% to $168.9 billion.\n\u2022 Microsoft 365 Commercial products and cloud services revenue increased 14% driven by Microsoft 365\nCommercial cloud revenue growth of 15%.\n\u2022 Microsoft 365 Consumer products and cloud services revenue increased 11% driven by Microsoft 365\nConsumer cloud revenue growth of 11%.\n\u2022 LinkedIn revenue increased 9%.\n\u2022 Dynamics products and cloud services revenue increased 15% driven by Dynamics 365 revenue growth of\n19%.\n\u2022 Server products and cloud services revenue increased 23% driven by Azure and other cloud services\nrevenue growth of 34%.\n\u2022 Windows OEM and Devices revenue increased 3%.\n\u2022 Xbox content and services revenue increased 16%.\n\u2022 Search and news advertising revenue excluding traffic acquisition costs increased 20%.\nIndustry Trends and Opportunities\nOur industry is dynamic and highly competitive, with frequent changes in both technologies and business models. Each\nindustry shift is an opportunity to conceive new products, new technologies, or n"
+      },
+      {
+        "type": "pdf",
+        "file": "MSFT_FY2025_10-K.pdf",
+        "ticker": "MSFT",
+        "fiscal_year": "2025",
+        "section": "Financial Statements",
+        "score": 0.734,
+        "text": "TE 1 \u2014 ACCOUNTING POLICIES\nAccounting Principles\nOur consolidated financial statements and accompanying notes are prepared in accordance with accounting principles\ngenerally accepted in the United States of America (\u201cGAAP\u201d).\nPrinciples of Consolidation\nThe consolidated financial statements include the accounts of Microsoft Corporation and its subsidiaries. Intercompany\ntransactions and balances have been eliminated.\nRecast of Certain Prior Period Information\nIn August 2024, we announced changes to the composition of our segments. These changes align our segments with\nhow we currently manage our business, most notably bringing the commercial components of Microsoft 365 together in\nthe Productivity and Business Processes segment. Beginning in fiscal year 2025, the information that our chief\noperating decision maker is regularly provided and reviews for purposes of allocating resources and assessing\nperformance reflects these segment changes. Prior period segment information has been recast to conform to the way\nwe internally manage and monitor our business during fiscal year 2025. These changes primarily impacted Note 8 \u2013\nGoodwill, Note 12 \u2013 Unearned Revenue, and Note 18 \u2013 Segment In"
+      },
+      {
+        "type": "pdf",
+        "file": "MSFT_FY2025_10-K.pdf",
+        "ticker": "MSFT",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.727,
+        "text": "ca (\u201cGAAP\u201d), and growth comparisons relate to the corresponding period of last fiscal year.\nIn the first quarter of fiscal year 2025, we made updates to our metrics in connection with the segment changes\ndescribed above. These changes align our metrics with how we manage and monitor certain businesses. The key\nchange was bringing the commercial components of Microsoft 365 together and creating a new Microsoft 365\nCommercial cloud revenue growth metric. Other changes include combining Windows OEM and Devices into a single\nrevenue growth metric that brings revenue from PC market-driven businesses together, as well as elevating our cloud\nrevenue growth metrics to align to our strategic focus on cloud growth.\nCommercial\nOur commercial business primarily consists of Server products and cloud services, Microsoft 365 Commercial products\nand cloud services, the commercial portion of LinkedIn, Dynamics products and cloud services, and Enterprise and\npartner services. Our commercial metrics allow management and investors to assess the overall health of our\ncommercial business and include leading indicators of future performance.\nCommercial remaining performance Commercial portion of revenue"
+      },
+      {
+        "type": "pdf",
+        "file": "MSFT_FY2025_10-K.pdf",
+        "ticker": "MSFT",
+        "fiscal_year": "2025",
+        "section": "Financial Statements",
+        "score": 0.726,
+        "text": "roducts and cloud services 7,827 6,831 5,796\nEnterprise and partner services 7,760 7,594 7,900\nMicrosoft 365 Consumer products and cloud services 7,404 6,648 6,417\nOther 72 45 119\nTotal $ 281,724 $ 245,122 $ 211,915\nOur Microsoft Cloud revenue, which includes Microsoft 365 Commercial cloud, Azure and other cloud services, the\ncommercial portion of LinkedIn, and Dynamics 365, was $168.9 billion, $137.7 billion, and $111.6 billion in fiscal years\n2025, 2024, and 2023, respectively. These amounts are included in Microsoft 365 Commercial products and cloud\nservices, Server products and cloud services, LinkedIn, and Dynamics products and cloud services in the table above.\nAssets are not allocated to segments for internal reporting presentations. A portion of amortization and depreciation is\nincluded with various other costs in an overhead allocation to each segment. It is impracticable for us to separately\nidentify the amount of amortization and depreciation by segment that is included in the measure of segment profit or\nloss.\nLong-lived assets, excluding financial instruments and tax assets, classified by the location of the controlling statutory\ncompany and with countries over 10% of"
+      },
+      {
+        "type": "pdf",
+        "file": "MSFT_FY2025_10-K.pdf",
+        "ticker": "MSFT",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.722,
+        "text": "alth of our\ncore businesses within these segments. The metrics primarily reflect growth across our cloud services.\nMicrosoft 365 Commercial cloud revenue Revenue from Microsoft 365 Commercial subscriptions, comprising\ngrowth Microsoft 365 Commercial, Enterprise Mobility + Security, the cloud\nportion of Windows Commercial, the per-user portion of Power BI,\nExchange, SharePoint, Microsoft Teams, Microsoft 365 Security and\nCompliance, and Microsoft 365 Copilot\nMicrosoft 365 Commercial seat growth The number of Microsoft 365 Commercial seats at end of period where\nseats are paid users covered by a Microsoft 365 Commercial\nsubscription\nMicrosoft 365 Consumer cloud revenue Revenue from Microsoft 365 Consumer subscriptions and other\ngrowth consumer services\nMicrosoft 365 Consumer subscribers The number of Microsoft 365 Consumer subscribers at end of period\nLinkedIn revenue growth Revenue from LinkedIn, including Talent Solutions, Marketing\nSolutions, Premium Subscriptions, and Sales Solutions\nDynamics 365 revenue growth Revenue from Dynamics 365, including a set of intelligent, cloud-based\napplications across ERP, CRM, Power Apps, and Power Automate\nAzure and other cloud services revenue"
+      }
+    ]
+  },
+  "q_017": {
+    "answer": "According to the provided FY2025 10-K, Google Services revenue is primarily generated from advertising (including Google Search & other properties, YouTube, and Google Network properties) and, beyond advertising, from consumer subscriptions (e.g., YouTube TV, YouTube Music and Premium, NFL Sunday Ticket, Google One), platforms (e.g., Google Play), and devices (e.g., Pixel).\n\nThe evidence does not include any figures or discussion of how YouTube advertising revenue changed between FY2024 and FY2025.",
+    "sql": [],
+    "tool_calls": [
+      {
+        "tool": "pdf_search",
+        "args": {
+          "question": "According to Alphabet's 10-K filings, what are the key components of 'Google Services' revenue, and how did YouTube advertising revenue change between FY2024 and FY2025?",
+          "ticker": "GOOGL",
+          "fiscal_year": "2025",
+          "section": "Business",
+          "chunk_type": "narrative"
+        }
+      }
+    ],
+    "pdf_chunks": [
+      {
+        "type": "pdf",
+        "file": "GOOGL_FY2025_10-K.pdf",
+        "ticker": "GOOGL",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.738,
+        "text": "uilding marketing\ncampaigns.\nWe have allocated substantial resources to stopping bad advertising practices and protecting users on the web.\nWe focus on creating the best advertising experiences for our users and advertisers in many ways, including filtering\nout invalid traffic, removing billions of bad ads from our systems every year, and closely monitoring the sites, apps, and\nvideos where ads appear and blocklisting them when necessary to ensure that ads do not fund bad content.\nIn addition, Google Services generates revenues from products and services beyond advertising, including:\n\u2022 consumer subscriptions, which primarily include revenues from YouTube services, such as YouTube TV,\nYouTube Music and Premium, and NFL Sunday Ticket, as well as Google One, which offers access to our most\ncapable Gemini models;\n\u2022 platforms, which primarily include revenues from Google Play sales of apps and in-app purchases; and\n\u2022 devices, which primarily include sales of the Pixel family of devices.\nGoogle Cloud\nThrough our Google Cloud Platform and Google Workspace offerings, Google Cloud generates revenues primarily\nfrom consumption-based fees and subscriptions for infrastructure, platform, appli"
+      },
+      {
+        "type": "pdf",
+        "file": "GOOGL_FY2025_10-K.pdf",
+        "ticker": "GOOGL",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.718,
+        "text": "-delete\ntheir data, applying privacy technologies like on-device processing, giving people tools to control their experience, or\nadvancing anti-malware, anti-phishing, and password security features.\nGoogle\nFor reporting purposes Google comprises two segments: Google Services and Google Cloud.\nGoogle Services\nServing Our Users\nWe have always been committed to building helpful products that can improve the lives of millions of people\nworldwide. Our product innovations are what make our services widely used, and our brand one of the most recognized\nin the world. Google Services' core products and platforms include ads, Android, Chrome, devices, Gmail, Google\nDrive, Google Gemini, Google Maps, Google Photos, Google Play, Search, and YouTube, with broad and growing\nadoption by users around the world.\n4.\nTable of Contents Alphabet Inc.\nOur products and services have come a long way since the company was founded more than 25 years ago. While\nGoogle Search started as a way to find web pages, organized into ten blue links, we have driven technical\nadvancements and product innovations that have transformed Google Search into a dynamic, multimodal experience.\nLarge language models have made"
+      },
+      {
+        "type": "pdf",
+        "file": "GOOGL_FY2025_10-K.pdf",
+        "ticker": "GOOGL",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.695,
+        "text": "which is reported in Alphabet-level activities. Alphabet's\nstructure is about helping each of our businesses prosper through strong leaders and independence.\nAccess and Technology for Everyone\nThe Internet is one of the world\u2019s most powerful equalizers; it propels ideas, people, and businesses large and\nsmall. Our mission to organize the world\u2019s information and make it universally accessible and useful is as relevant\ntoday as it was when we were founded in 1998. Since then, we have evolved from a company that helps people find\nanswers to a company that also helps people get things done.\nWe are focused on building an even more helpful Google for everyone, and we aspire to give everyone the tools\nthey need to increase their knowledge, health, happiness, and success. Google Search helps people find information\nand make sense of the world in more natural and intuitive ways, with trillions of searches on Google every year.\nYouTube provides people with entertainment, information, and opportunities to learn something new and helps support\nthe creator economy through the YouTube Partner Program. Google Cloud helps customers build for the future,\nimprove productivity, reduce costs, and unl"
+      },
+      {
+        "type": "pdf",
+        "file": "GOOGL_FY2025_10-K.pdf",
+        "ticker": "GOOGL",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.686,
+        "text": "s that people rely on every day is\na journey that we are investing in for the long-term.\nHow We Make Money\nWe have built world-class advertising technologies for advertisers, agencies, and publishers to power their digital\nmarketing businesses. Our advertising solutions help millions of companies grow their businesses through our wide\nrange of products across devices and formats, and we aim to ensure positive user experiences by serving the right ads\nat the right time and by building deep partnerships with brands and agencies. AI has been foundational to our\nadvertising business for more than a decade. Products like Demand Gen, Performance Max, and Product Studio use\nthe full power of our AI to help advertisers find untapped and incremental conversion opportunities.\nGoogle Services generates revenues primarily by delivering both performance and brand advertising that appears\non Google Search & other properties, YouTube, and Google Network partners' properties (\"Google Network\nproperties\"). We continue to invest in both performance and brand advertising and seek to improve the measurability of\nadvertising so advertisers understand the effectiveness of their campaigns.\n\u2022 Performance"
+      },
+      {
+        "type": "pdf",
+        "file": "GOOGL_FY2025_10-K.pdf",
+        "ticker": "GOOGL",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.676,
+        "text": "arch & other properties, YouTube, and Google Network partners' properties (\"Google Network\nproperties\"). We continue to invest in both performance and brand advertising and seek to improve the measurability of\nadvertising so advertisers understand the effectiveness of their campaigns.\n\u2022 Performance advertising creates and delivers relevant ads that users will click on leading to direct\nengagement with advertisers. Performance advertising lets our advertisers connect with users while driving\nmeasurable results. Our ads tools allow performance advertisers to create simple text-based ads.\n\u2022 Brand advertising helps enhance users' awareness of and affinity for advertisers' products and services,\nthrough videos, text, images, and other interactive ads that run across various devices. We help brand\nadvertisers deliver digital videos and other types of ads to specific audiences for their brand-building marketing\ncampaigns.\nWe have allocated substantial resources to stopping bad advertising practices and protecting users on the web.\nWe focus on creating the best advertising experiences for our users and advertisers in many ways, including filtering\nout invalid traffic, removing billions of"
+      },
+      {
+        "type": "pdf",
+        "file": "GOOGL_FY2025_10-K.pdf",
+        "ticker": "GOOGL",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.675,
+        "text": "ITEM 1. BUSINESS\nOverview\nAs our founders Larry and Sergey wrote in the original founders' letter, \"Google is not a conventional company.\nWe do not intend to become one.\" That unconventional spirit has been a driving force throughout our history, inspiring\nus to tackle big problems and invest in moonshots. It led us to be a pioneer in the development of artificial intelligence\n(AI) and, since 2016, be an AI-first company. We continue this work under the leadership of Alphabet and Google CEO,\nSundar Pichai.\nAlphabet is a collection of businesses \u2014 the largest of which is Google. We report Google in two segments,\nGoogle Services and Google Cloud, and all non-Google businesses collectively as Other Bets. Supporting these\nbusinesses, we have centralized certain AI-related research and development focused on advanced research in AI and\ndeveloping the frontier models that serve our businesses, which is reported in Alphabet-level activities. Alphabet's\nstructure is about helping each of our businesses prosper through strong leaders and independence.\nAccess and Technology for Everyone\nThe Internet is one of the world\u2019s most powerful equalizers; it propels ideas, people, and businesses larg"
+      },
+      {
+        "type": "pdf",
+        "file": "GOOGL_FY2025_10-K.pdf",
+        "ticker": "GOOGL",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.663,
+        "text": "f searches on Google every year.\nYouTube provides people with entertainment, information, and opportunities to learn something new and helps support\nthe creator economy through the YouTube Partner Program. Google Cloud helps customers build for the future,\nimprove productivity, reduce costs, and unlock new growth engines. We continually innovate and build new products\nand features to help our users, partners, customers, and communities and have invested more than $200 billion in\nresearch and development in the last five years in support of these efforts.\n3.\nTable of Contents Alphabet Inc.\nMaking AI Helpful for Everyone\nWe believe AI is a profound platform shift that can bring meaningful and positive change to people and societies\nacross the world, and to our business. We aim to build the most advanced, safe, and responsible AI through our full-\nstack approach, which spans AI-optimized infrastructure; world-class research, including models and tooling; and our\nproducts and platforms that bring AI to billions of people, developers, and enterprises.\nAt the foundation of our full-stack approach is our AI-optimized infrastructure \u2014 a key differentiator enabling us to\npower our own produ"
+      },
+      {
+        "type": "pdf",
+        "file": "GOOGL_FY2025_10-K.pdf",
+        "ticker": "GOOGL",
+        "fiscal_year": "2025",
+        "section": "Business",
+        "score": 0.648,
+        "text": "courses for new managers, to learning resources that help\nthem provide feedback and manage performance, to coaching and individual support.\nAs of December 31, 2025, Alphabet had 190,820 employees. We have work councils and statutory employee\nrepresentation obligations in certain countries, and we are committed to supporting protected labor rights, maintaining\nan open culture, and listening to our employees.\nWhen appropriate we partner with outside companies on a contractual basis to provide a specialized service or to\ntemporarily cover a short-term need. The employees of our suppliers and staffing partners \u2014 vendors and temporary\nstaff, respectively \u2014 and independent contractors who are self-employed, make up our extended workforce. We\nchoose our partners and staffing agencies carefully, and review their compliance with Google\u2019s Supplier Code of\nConduct.\nGovernment Regulation\nWe are subject to numerous United States (US) federal, state, and local, as well as foreign laws, and regulations\ncovering a wide variety of subjects, and the scope of this coverage continues to broaden with continuing new legal and\nregulatory developments in the US and internationally. Like other companies in"
+      }
+    ]
+  },
+  "q_018": {
+    "answer": "Alphabet (GOOGL) has the highest current ratio at 2.01x in FY2025.\nOthers: Microsoft at 1.35x, Apple at 0.89x. (per SQL data)",
+    "sql": [
+      "SELECT company_ticker, fiscal_year, total_current_assets, total_current_liabilities,\n       ROUND(CAST(total_current_assets AS REAL) / CAST(total_current_liabilities AS REAL), 4) AS current_ratio\nFROM balance_sheets\nWHERE fiscal_year = 2025 AND period_type = 'FY'\nORDER BY current_ratio DESC;"
+    ],
+    "tool_calls": [
+      {
+        "tool": "sql_query",
+        "args": {
+          "question": "Which company has the highest current ratio (current assets / current liabilities) in their most recent fiscal year?"
+        }
+      }
+    ]
+  },
+  "q_022": {
+    "answer": "Alphabet had the largest absolute increase at approximately $52.8B ($350.0B to $402.8B). By operating segment, Google Services grew by $37.8B ($304.9B to $342.7B), Google Cloud grew by $15.5B ($43.2B to $58.7B), Other Bets grew by $-111M ($1.6B to $1.5B), Hedging gains (losses) grew by $-338M ($211M to $-127M). Microsoft increased by $36.6B; Apple increased by $25.1B (per SQL data)",
+    "sql": [
+      "SELECT a.company_ticker, a.revenue AS revenue_2025, b.revenue AS revenue_2024,\n       (a.revenue - b.revenue) AS absolute_increase\nFROM income_statements a\nJOIN income_statements b ON a.company_ticker = b.company_ticker\n  AND b.fiscal_year = 2024 AND b.period_type = 'FY'\nWHERE a.fiscal_year = 2025 AND a.period_type = 'FY'\nORDER BY absolute_increase DESC;\n\nSELECT a.segment_name, a.revenue AS revenue_2025, b.revenue AS revenue_2024,\n       (a.revenue - b.revenue) AS segment_change\nFROM segment_revenue a\nJOIN segment_revenue b ON a.company_ticker = b.company_ticker\n  AND a.segment_name = b.segment_name\n  AND b.fiscal_year = 2024 AND b.period_type = 'FY'\nWHERE a.company_ticker = ? AND a.fiscal_year = 2025 AND a.period_type = 'FY'\nORDER BY segment_change DESC;"
+    ],
+    "tool_calls": [
+      {
+        "tool": "sql_query",
+        "args": {
+          "question": "Across all three companies, which saw the largest absolute dollar increase in revenue between their two most recent fiscal years? Break down how much of that increase came from each business segment."
+        }
+      }
+    ]
+  },
+  "q_025": {
+    "answer": "We are asked: \"Calculate the Services revenue growth rate for each of the last two years, compare it to iPhone revenue growth, and find what Apple's 10-K says about the strategic importance of Services.\"\n\nWe have PDF evidence from AAPL FY2025 10-K and FY2024 10-K. The \"last two years\" likely refer to fiscal years 2025 and 2024, as the latest 10-K is FY2025. The data shows net sales for Services and iPhone for 2025, 2024, 2023, and 2022.\n\nFrom Source 2 (FY2025 10-K, Item 7, p.22): \nServices net sales: 2025: $109,158 million, 2024: $96,169 million, 2023: $85,200 million. Growth rates: 2025 vs 2024: (109,158 - 96,169)/96,169 = 12,989/96,169 \u2248 13.5%? The table says \"14 %\" change for Services in 2025. So growth rate 14%. For 2024 vs 2023: (96,169 - 85,200)/85,200 = 10,969/85,200 \u2248 12.9%? The table says \"13 %\" change. So Services growth: 2025: 14%, 2024: 13%.\n\niPhone net sales: 2025: $209,586, 2024: $201,183, 2023: $200,583. Growth: 2025 vs 2024: (209,586 - 201,183)/201,183 = 8,403/201,183 \u2248 4.2%? The table in Source 2 shows iPhone change: 2025: \"?\" Actually Source 2: \"iPhone 209,586 ... %\" The table in Source 2 is cut off. It says: \n\"iPhone 209,586 ... % 29,357\" Wait, the table in Source 2 is messy. Let's read carefully:\n\nSource 2: \n\"% 29,357\niPad 28,023 5 % 26,694 (6)% 28,300\nWearables, Home and Accessories 35,686 (4)% 37,005 (7)% 39,845\nServices (1) 109,158 14 % 96,169 13 % 85,200\nTotal net sales $ 416,161 6 % $ 391,035 2 % $ 383,285\"\n\nIt seems the iPhone line is missing the growth percentages. But we can calculate. iPhone 2025: $209,586, 2024: $201,183, 2023: $200,583. So 2025 growth: (209,586-201,183)/201,183 = 8,403/201,183 = 0.04177, about 4.2%. 2024 growth: (201,183-200,583)/200,583 = 600/200,583 = 0.003, about 0.3% (flat). The text says \"iPhone net sales increased during 2025 compared to 2024 due to higher net sales of Pro models.\" And",
+    "sql": [],
+    "tool_calls": [
+      {
+        "tool": "sql_query",
+        "args": {
+          "question": "Apple's Services segment has been growing as a share of total revenue. Calculate the Services revenue growth rate for each of the last two years, compare it to iPhone revenue growth, and find what Apple's 10-K says about the strategic importance of Services."
+        }
+      },
+      {
+        "tool": "pdf_search",
+        "args": {
+          "question": "Apple's Services segment has been growing as a share of total revenue. Calculate the Services revenue growth rate for each of the last two years, compare it to iPhone revenue growth, and find what Apple's 10-K says about the strategic importance of Services.",
+          "ticker": "AAPL"
+        }
+      }
+    ],
+    "pdf_chunks": [
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.773,
+        "text": ".\nServices\nServices net sales increased during 2025 compared to 2024 primarily due to higher net sales from advertising, the App Store and\ncloud services.\nApple Inc. | 2025 Form 10-K | 23\nGross Margin\nProducts and Services gross margin and gross margin percentage for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 2024 2023\nGross margin:\nProducts $ 112,887 $ 109,633 $ 108,803\nServices 82,314 71,050 60,345\nTotal gross margin $ 195,201 $ 180,683 $ 169,148\nGross margin percentage:\nProducts 36.8% 37.2% 36.5%\nServices 75.4% 73.9% 70.8%\nTotal gross margin percentage 46.9% 46.2% 44.1%\nProducts Gross Margin\nProducts gross margin increased during 2025 compared to 2024 primarily due to favorable costs and a different mix of products,\npartially offset by tariff costs.\nProducts gross margin percentage decreased during 2025 compared to 2024 primarily due to a different mix of products and tariff\ncosts, partially offset by other favorable costs.\nServices Gross Margin\nServices gross margin increased during 2025 compared to 2024 primarily due to higher Services net sales and a different mix of\nservices.\nServices gross margin percentage increased during 2025 compared to 2024 primari"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "MD&A",
+        "score": 0.76,
+        "text": "% 29,357\niPad 28,023 5 % 26,694 (6)% 28,300\nWearables, Home and Accessories 35,686 (4)% 37,005 (7)% 39,845\nServices (1) 109,158 14 % 96,169 13 % 85,200\nTotal net sales $ 416,161 6 % $ 391,035 2 % $ 383,285\n(1) Services net sales include amortization of the deferred value of services bundled in the sales price of certain products.\niPhone\niPhone net sales increased during 2025 compared to 2024 due to higher net sales of Pro models.\nMac\nMac net sales increased during 2025 compared to 2024 primarily due to higher net sales of laptops and desktops.\niPad\niPad net sales increased during 2025 compared to 2024 primarily due to higher net sales of iPad Air, iPad mini and iPad, partially\noffset by lower net sales of iPad Pro.\nWearables, Home and Accessories\nWearables, Home and Accessories net sales decreased during 2025 compared to 2024 primarily due to lower net sales of\nAccessories and Wearables.\nServices\nServices net sales increased during 2025 compared to 2024 primarily due to higher net sales from advertising, the App Store and\ncloud services.\nApple Inc. | 2025 Form 10-K | 23\nGross Margin\nProducts and Services gross margin and gross margin percentage for 2025, 2024 and 2023 were as foll"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2024_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2024",
+        "section": "Financial Statements",
+        "score": 0.757,
+        "text": "ales disaggregated by significant products and services for 2024, 2023 and 2022 were as follows (in millions):\n2024 2023 2022\niPhone $ 201,183 $ 200,583 $ 205,489\nMac 29,984 29,357 40,177\niPad 26,694 28,300 29,292\nWearables, Home and Accessories 37,005 39,845 41,241\nServices (1) 96,169 85,200 78,129\nTotal net sales $ 391,035 $ 383,285 $ 394,328\n(1) Services net sales include amortization of the deferred value of services bundled in the sales price of certain products.\nTotal net sales include $7.7 billion of revenue recognized in 2024 that was included in deferred revenue as of September 30, 2023,\n$8.2 billion of revenue recognized in 2023 that was included in deferred revenue as of September 24, 2022, and $7.5 billion of\nrevenue recognized in 2022 that was included in deferred revenue as of September 25, 2021.\nApple Inc. | 2024 Form 10-K | 35\nThe Company\u2019s proportion of net sales by disaggregated revenue source was generally consistent for each reportable segment in\nNote 13, \u201cSegment Information and Geographic Data\u201d for 2024, 2023 and 2022, except in Greater China, where iPhone revenue\nrepresented a moderately higher proportion of net sales.\nAs of September 28, 2024 and September 3"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Financial Statements",
+        "score": 0.756,
+        "text": "s control of the product before transferring it to the customer, the\nCompany recognizes revenue based on the gross amount billed to customers. The Company considers multiple factors when\ndetermining whether it obtains control of third-party products, including evaluating if it can establish the price of the product, retains\ninventory risk for tangible products or has the responsibility for ensuring acceptability of the product. For third-party applications sold\nthrough the App Store, the Company does not obtain control of the product before transferring it to the customer. Therefore, the\nCompany accounts for all third-party application\u2013related sales on a net basis by recognizing in Services net sales only the\ncommission it retains.\nApple Inc. | 2025 Form 10-K | 35\nThe following table shows disaggregated net sales, as well as the portion of total net sales that was previously deferred, for 2025,\n2024 and 2023 (in millions):\n2025 2024 2023\niPhone $ 209,586 $ 201,183 $ 200,583\nMac 33,708 29,984 29,357\niPad 28,023 26,694 28,300\nWearables, Home and Accessories 35,686 37,005 39,845\nServices (1) 109,158 96,169 85,200\nTotal net sales $ 416,161 $ 391,035 $ 383,285\nPortion of total net sales"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2025_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2025",
+        "section": "Risk Factors",
+        "score": 0.748,
+        "text": "ittle to no growth or contracted overall.\nIf the Company is unable to compete successfully, its business, reputation, results of operations, financial condition and stock price\ncan be materially adversely affected.\nApple Inc. | 2025 Form 10-K | 7\nBusiness Risks\nTo remain competitive and stimulate customer demand, the Company must successfully manage frequent introductions\nand transitions of products and services.\nDue to the highly volatile and competitive nature of the markets and industries in which the Company competes, the Company must\ncontinually introduce new products, services and technologies, enhance existing products and services, effectively stimulate\ncustomer demand for new and upgraded products and services, navigate global regulatory requirements and barriers to market\naccess, and successfully manage the transition to these new and upgraded products and services. The success of new product and\nservice introductions depends on a number of factors, including the Company\u2019s ability to recruit and retain highly skilled personnel to\nexecute on its strategic initiatives, and the timely and successful development and market acceptance of new products, services and\ntechnologies"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2024_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2024",
+        "section": "MD&A",
+        "score": 0.744,
+        "text": "rm 10-K | 22\nProducts and Services Performance\nThe following table shows net sales by category for 2024, 2023 and 2022 (dollars in millions):\n2024 Change 2023 Change 2022\niPhone $ 201,183 \u2014 % $ 200,583 (2)% $ 205,489\nMac 29,984 2 % 29,357 (27)% 40,177\niPad 26,694 (6)% 28,300 (3)% 29,292\nWearables, Home and Accessories 37,005 (7)% 39,845 (3)% 41,241\nServices (1) 96,169 13 % 85,200 9 % 78,129\nTotal net sales $ 391,035 2 % $ 383,285 (3)% $ 394,328\n(1) Services net sales include amortization of the deferred value of services bundled in the sales price of certain products.\niPhone\niPhone net sales were relatively flat during 2024 compared to 2023.\nMac\nMac net sales increased during 2024 compared to 2023 due primarily to higher net sales of laptops.\niPad\niPad net sales decreased during 2024 compared to 2023 due primarily to lower net sales of iPad Pro and the entry-level iPad\nmodels, partially offset by higher net sales of iPad Air.\nWearables, Home and Accessories\nWearables, Home and Accessories net sales decreased during 2024 compared to 2023 due primarily to lower net sales of\nWearables and Accessories.\nServices\nServices net sales increased during 2024 compared to 2023 due primarily to"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2024_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2024",
+        "section": "Financial Statements",
+        "score": 0.741,
+        "text": "sales to third parties, related cost of sales, and\noperating expenses directly attributable to the segment. The information provided to the Company\u2019s chief operating decision maker\nfor purposes of making decisions and assessing segment performance excludes asset information.\nApple Inc. | 2024 Form 10-K | 46\nThe following table shows information by reportable segment for 2024, 2023 and 2022 (in millions):\n2024 2023 2022\nAmericas:\nNet sales $ 167,045 $ 162,560 $ 169,658\nOperating income $ 67,656 $ 60,508 $ 62,683\nEurope:\nNet sales $ 101,328 $ 94,294 $ 95,118\nOperating income $ 41,790 $ 36,098 $ 35,233\nGreater China:\nNet sales $ 66,952 $ 72,559 $ 74,200\nOperating income $ 27,082 $ 30,328 $ 31,153\nJapan:\nNet sales $ 25,052 $ 24,257 $ 25,977\nOperating income $ 12,454 $ 11,888 $ 12,257\nRest of Asia Pacific:\nNet sales $ 30,658 $ 29,615 $ 29,375\nOperating income $ 13,062 $ 12,066 $ 11,569\nA reconciliation of the Company\u2019s segment operating income to the Consolidated Statements of Operations for 2024, 2023 and 2022\nis as follows (in millions):\n2024 2023 2022\nSegment operating income $ 162,044 $ 150,888 $ 152,895\nResearch and development expense (31,370) (29,915) (26,251)\nOther corporate exp"
+      },
+      {
+        "type": "pdf",
+        "file": "AAPL_FY2024_10-K.pdf",
+        "ticker": "AAPL",
+        "fiscal_year": "2024",
+        "section": "MD&A",
+        "score": 0.738,
+        "text": "offset by higher net sales of iPad Air.\nWearables, Home and Accessories\nWearables, Home and Accessories net sales decreased during 2024 compared to 2023 due primarily to lower net sales of\nWearables and Accessories.\nServices\nServices net sales increased during 2024 compared to 2023 due primarily to higher net sales from advertising, the App Store\u00ae and\ncloud services.\nApple Inc. | 2024 Form 10-K | 23\nGross Margin\nProducts and Services gross margin and gross margin percentage for 2024, 2023 and 2022 were as follows (dollars in millions):\n2024 2023 2022\nGross margin:\nProducts $ 109,633 $ 108,803 $ 114,728\nServices 71,050 60,345 56,054\nTotal gross margin $ 180,683 $ 169,148 $ 170,782\nGross margin percentage:\nProducts 37.2 % 36.5 % 36.3 %\nServices 73.9 % 70.8 % 71.7 %\nTotal gross margin percentage 46.2 % 44.1 % 43.3 %\nProducts Gross Margin\nProducts gross margin and Products gross margin percentage increased during 2024 compared to 2023 due to cost savings,\npartially offset by a different Products mix and the weakness in foreign currencies relative to the U.S. dollar.\nServices Gross Margin\nServices gross margin increased during 2024 compared to 2023 due primarily to higher Services net s"
+      }
+    ]
+  }
+}

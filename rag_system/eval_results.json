@@ -1,0 +1,110 @@
+{
+  "overall_score": 0.925,
+  "total": 10,
+  "results": [
+    {
+      "id": "q_001",
+      "score": 1.0,
+      "method": "fuzzy_numeric",
+      "tier": 1,
+      "gold_answer": "$416.2 billion",
+      "predicted_answer": "AAPL fiscal year 2025; revenue $416.2B (per SQL data)",
+      "sections_used": []
+    },
+    {
+      "id": "q_006",
+      "score": 0.75,
+      "method": "llm_judge+list_heuristic",
+      "tier": 1,
+      "gold_answer": "Apple disclosed risks including: reliance on single or limited sources for components; dependence on third-party manufacturers; supply chain disruptions from geopolitical tensions, natural disasters, and health emergencies; component supply constraints affecting product availability; and risks from concentration of manufacturing operations in specific regions.",
+      "predicted_answer": "Based on the provided PDF evidence, the primary risk factors Apple disclosed related to its supply chain are:\n\n*   **Reliance on single or limited sources**: The Company relies on single or limited sources for the supply and manufacture of many critical components, which exacerbates negative consequences from business interruptions [Source 3].\n*   **Supply shortages and price increases**: The Company is subject to significant risks of supply shortages and price increases. This can occur because component suppliers may fail, be subject to consolidation, or decide to concentrate on common components instead of those customized for the Company, limiting its ability to obtain sufficient quantities [Source 7].\n*   **Inability to extend or renew supplier agreements**: The Company may not be able to extend or renew agreements for the supply of components on similar terms, or at all, and may not be successful in obtaining sufficient quantities from alternative sources [Source 7].\n*   **Business interruptions affecting suppliers**: Political events, trade disputes, geopolitical tensions, natural disasters, and other business interruptions can have a material adverse effect on the Company's suppliers and contract manufacturers [Source 1].\n*   **Component defects**: Defects can exist in components the Company purchases from third parties, which could make the Company\u2019s products unsafe [Source 2].",
+      "sections_used": [
+        "Risk Factors"
+      ]
+    },
+    {
+      "id": "q_008",
+      "score": 1.0,
+      "method": "fuzzy_numeric",
+      "tier": 1,
+      "gold_answer": "51.3%",
+      "predicted_answer": "Microsoft (MSFT) had 51.3% of its total revenue from the United States in FY2025 (per SQL data)",
+      "sections_used": []
+    },
+    {
+      "id": "q_011",
+      "score": 1.0,
+      "method": "entity_match",
+      "tier": 2,
+      "gold_answer": "Alphabet (GOOGL) had the fastest revenue growth between the two most recent fiscal years at about 15.1%.",
+      "predicted_answer": "GOOGL had the fastest revenue growth rate at 15.1%.",
+      "sections_used": []
+    },
+    {
+      "id": "q_012",
+      "score": 1.0,
+      "method": "llm_judge+list_heuristic",
+      "tier": 2,
+      "gold_answer": "Apple's Greater China revenue decreased from $66.95 billion in FY2024 to $64.38 billion in FY2025, a decline of approximately 3.8%. The FY2025 10-K states this was primarily due to lower net sales of iPhone, partially offset by higher net sales of Mac.",
+      "predicted_answer": "Apple\u2019s Greater China revenue fell from $67.0 billion in fiscal 2024 to $64.4 billion in fiscal 2025, a decline of about $2.6 billion (4%). The 10\u2011K explains that the decrease was primarily due to lower iPhone net sales, partially offset by higher Mac net sales.",
+      "sections_used": [
+        "MD&A"
+      ]
+    },
+    {
+      "id": "q_014",
+      "score": 1.0,
+      "method": "llm_judge+list_heuristic",
+      "tier": 2,
+      "gold_answer": "The three segments in the FY2025 10-K are: (1) Productivity and Business Processes ($120.8B) - includes Microsoft 365 Commercial/Consumer, LinkedIn, and Dynamics; (2) Intelligent Cloud ($106.3B) - includes Azure, SQL Server, Windows Server, GitHub, and enterprise services; (3) More Personal Computing ($54.6B) - includes Windows, Devices, Gaming, and Search/news advertising.",
+      "predicted_answer": "The provided PDF evidence does not include detailed definitions of what each segment comprises. It only states that the three segments are **Productivity and Business Processes**, **Intelligent Cloud**, and **More Personal Computing**, and that the August 2024 restructuring notably brought the commercial components of Microsoft 365 together in the Productivity and Business Processes segment.\n\nRevenue for each segment (fiscal year 2025) from the SQL evidence:\n\n- Productivity and Business Processes: **$120.8 billion**\n- Intelligent Cloud: **$106.3 billion**\n- More Personal Computing: **$54.6 billion**",
+      "sections_used": [
+        "Financial Statements",
+        "MD&A",
+        "Business"
+      ]
+    },
+    {
+      "id": "q_017",
+      "score": 0.75,
+      "method": "llm_judge+list_heuristic",
+      "tier": 2,
+      "gold_answer": "Google Services includes Google Search & other, YouTube ads, Google Network, and Google subscriptions/platforms/devices. YouTube advertising revenue grew from $36.1 billion in FY2024 to $40.4 billion in FY2025, an increase of approximately 11.7%.",
+      "predicted_answer": "According to the provided FY2025 10-K, Google Services revenue is primarily generated from advertising (including Google Search & other properties, YouTube, and Google Network properties) and, beyond advertising, from consumer subscriptions (e.g., YouTube TV, YouTube Music and Premium, NFL Sunday Ticket, Google One), platforms (e.g., Google Play), and devices (e.g., Pixel).\n\nThe evidence does not include any figures or discussion of how YouTube advertising revenue changed between FY2024 and FY2025.",
+      "sections_used": [
+        "Business"
+      ]
+    },
+    {
+      "id": "q_018",
+      "score": 1.0,
+      "method": "entity_match",
+      "tier": 2,
+      "gold_answer": "Alphabet (GOOGL) has the highest current ratio in the most recent fiscal year (about 2.01x).",
+      "predicted_answer": "Alphabet (GOOGL) has the highest current ratio at 2.01x in FY2025.\nOthers: Microsoft at 1.35x, Apple at 0.89x. (per SQL data)",
+      "sections_used": []
+    },
+    {
+      "id": "q_022",
+      "score": 1.0,
+      "method": "llm_judge+list_heuristic",
+      "tier": 3,
+      "gold_answer": "Alphabet had the largest absolute increase at approximately $52.8B ($350.0B to $402.8B). By operating segment, Google Services grew by $37.8B ($304.9B to $342.7B), Google Cloud grew by $15.5B ($43.2B to $58.7B), and Other Bets declined by $0.1B ($1.6B to $1.5B); a hedging reconciliation of approximately -$0.3B accounts for the difference between the segment subtotal and consolidated revenue. Microsoft increased by $36.6B and Apple by $25.1B.",
+      "predicted_answer": "Alphabet had the largest absolute increase at approximately $52.8B ($350.0B to $402.8B). By operating segment, Google Services grew by $37.8B ($304.9B to $342.7B), Google Cloud grew by $15.5B ($43.2B to $58.7B), Other Bets grew by $-111M ($1.6B to $1.5B), Hedging gains (losses) grew by $-338M ($211M to $-127M). Microsoft increased by $36.6B; Apple increased by $25.1B (per SQL data)",
+      "sections_used": []
+    },
+    {
+      "id": "q_025",
+      "score": 0.75,
+      "method": "llm_judge+list_heuristic",
+      "tier": 3,
+      "gold_answer": "Services growth: FY2023->FY2024: 12.9% ($85.2B to $96.2B), FY2024->FY2025: 13.5% ($96.2B to $109.2B). iPhone growth: FY2023->FY2024: 0.3%, FY2024->FY2025: 4.2%. Services is consistently growing much faster. The 10-K highlights Services as a key growth driver with higher margins, recurring revenue from subscriptions, App Store, Apple Music, iCloud, and advertising.",
+      "predicted_answer": "We are asked: \"Calculate the Services revenue growth rate for each of the last two years, compare it to iPhone revenue growth, and find what Apple's 10-K says about the strategic importance of Services.\"\n\nWe have PDF evidence from AAPL FY2025 10-K and FY2024 10-K. The \"last two years\" likely refer to fiscal years 2025 and 2024, as the latest 10-K is FY2025. The data shows net sales for Services and iPhone for 2025, 2024, 2023, and 2022.\n\nFrom Source 2 (FY2025 10-K, Item 7, p.22): \nServices net sales: 2025: $109,158 million, 2024: $96,169 million, 2023: $85,200 million. Growth rates: 2025 vs 2024: (109,158 - 96,169)/96,169 = 12,989/96,169 \u2248 13.5%? The table says \"14 %\" change for Services in 2025. So growth rate 14%. For 2024 vs 2023: (96,169 - 85,200)/85,200 = 10,969/85,200 \u2248 12.9%? The table says \"13 %\" change. So Services growth: 2025: 14%, 2024: 13%.\n\niPhone net sales: 2025: $209,586, 2024: $201,183, 2023: $200,583. Growth: 2025 vs 2024: (209,586 - 201,183)/201,183 = 8,403/201,183 \u2248 4.2%? The table in Source 2 shows iPhone change: 2025: \"?\" Actually Source 2: \"iPhone 209,586 ... %\" The table in Source 2 is cut off. It says: \n\"iPhone 209,586 ... % 29,357\" Wait, the table in Source 2 is messy. Let's read carefully:\n\nSource 2: \n\"% 29,357\niPad 28,023 5 % 26,694 (6)% 28,300\nWearables, Home and Accessories 35,686 (4)% 37,005 (7)% 39,845\nServices (1) 109,158 14 % 96,169 13 % 85,200\nTotal net sales $ 416,161 6 % $ 391,035 2 % $ 383,285\"\n\nIt seems the iPhone line is missing the growth percentages. But we can calculate. iPhone 2025: $209,586, 2024: $201,183, 2023: $200,583. So 2025 growth: (209,586-201,183)/201,183 = 8,403/201,183 = 0.04177, about 4.2%. 2024 growth: (201,183-200,583)/200,583 = 600/200,583 = 0.003, about 0.3% (flat). The text says \"iPhone net sales increased during 2025 compared to 2024 due to higher net sales of Pro models.\" And",
+      "sections_used": [
+        "Financial Statements",
+        "MD&A",
+        "Risk Factors"
+      ]
+    }
+  ]
+}
