@@ -1,4 +1,4 @@
-# Fireworks Agentic RAG — 10-K Research Assistant
+# Agentic RAG for 10-K Analysis
 
 A local agentic RAG system that answers financial research questions over structured data and 10-K PDF filings for Apple, Microsoft, and Alphabet (FY2024–2025).
 
@@ -151,9 +151,7 @@ rag_system/
   questions/
     dev_questions.json
     dev_answers.json
-  report.md          # Technical report
   requirements.txt
-  .env               # FIREWORKS_API_KEY (create this)
 ```
 
 ## Models Used
@@ -163,8 +161,3 @@ rag_system/
 | Routing, SQL generation, synthesis | `accounts/fireworks/models/deepseek-v4-pro` |
 | Embeddings | `nomic-ai/nomic-embed-text-v1.5` |
 
-## Notes
-
-- PDF indexing is cached in `rag_system/data/chroma_db/`
-- Never commit your API key
-- See `report.md` for architecture, evaluation results, and trade-offs
