@@ -1,45 +1,35 @@
-# Fireworks AI AMLE Take-Home: Agentic RAG for 10-K Analysis
+# Agentic RAG for 10-K Analysis
 
-This take-home is meant to mirror part of the Applied Machine Learning Engineer role: supporting customers in their journey to build GenAI applications on Fireworks.
+This project is a local agentic RAG system I built to answer questions over 10-K filings and structured financial data.
 
-In this exercise, you should approach the problem like a Fireworks engineer supporting a customer who needs an agentic RAG workflow over structured financial data and 10-K filings.
+I wanted to keep the setup simple to run locally, while still showing the parts that matter: routing, evidence gathering, and grounded answers.
 
-## What We're Looking For
+## What I Focused On
 
-1. Customer-oriented problem solving: translate the customer's needs into a practical system design.
-2. Agent and tool design: decide when to query SQL, search PDFs, or combine both.
-3. Evaluation discipline: show how you measured quality and where the system still fails.
-4. Practical trade-offs: explain choices around models, latency, cost, reliability, and complexity.
-5. Communication: provide clear instructions, clear answers, and a concise technical report.
+1. Routing questions to SQL, PDFs, or both.
+2. Keeping answers grounded in the source data.
+3. Making the system easy to run and inspect locally.
+4. Being explicit about evaluation and trade-offs.
+5. Writing down the implementation clearly enough that I could revisit it later.
 
-## Customer Scenario
+## Project Context
 
-**From:** Natalie Brooks <natalie.brooks@acmecorp.example.com>  
-**To:** Solutions Team <solutions@fireworks.ai>  
-**Subject:** Help Needed: Local Research Assistant for 10-K Analysis
+I used the provided 10-K filings, SQLite database, and dev questions as the basis for the project.
 
-Hi Fireworks team,
-
-Our research team spends a lot of time reading annual reports, cross-checking management commentary against financial tables, and building simple comparisons across companies. We have a local dataset that combines structured financial data with the original 10-K filings, and we want a local AI assistant that can help analysts answer increasingly complex questions over that material.
-
-Our current prototype can handle simple lookups, but it breaks down when a question requires planning, multiple retrieval steps, or combining narrative disclosures with structured financials. In particular, we need a system that can:
+The system is meant to handle questions that require:
 
 - decide when to query the SQLite database versus the filings
 - gather evidence from the right sources
 - answer questions that range from direct lookup to multi-step synthesis
 - stay grounded in the provided documents and data
 
-We are providing:
+The provided data includes:
 
 - six 10-K filings for Apple, Microsoft, and Alphabet across FY2024 and FY2025
 - a local SQLite database with structured financial data
 - a 10-question development set
 
-We would like a local proof of concept that a reviewer can run on their machine and interact with directly.
-
-Thanks,  
-Natalie Brooks  
-Director of Research Systems, Acme Corp
+That combination made it a good fit for a small personal project where I could experiment with retrieval, agent routing, and evaluation without needing a large production stack.
 
 ## Project Structure
 
@@ -60,7 +50,7 @@ Director of Research Systems, Acme Corp
 
 If `data/financials.db` and the 10-K PDFs are already present, `setup.sh` will reuse them. It only fetches SEC data if it needs to rebuild missing assets.
 
-The dev-set answer key is public so you can evaluate your system locally. We intentionally do not provide an evaluation harness; part of the assignment is deciding how to measure correctness against the provided questions, answers, and data. Fireworks keeps a separate held-out set for the hidden final evaluation.
+The dev-set answer key is public so you can evaluate your system locally. I intentionally did not include an evaluation harness; part of the exercise is deciding how to measure correctness against the provided questions, answers, and data. A separate held-out set is used for the hidden final evaluation.
 
 ## Data Overview
 
@@ -74,7 +64,7 @@ The SQLite database includes these tables:
 
 The filings provide the narrative context needed for questions about risks, strategy, segment definitions, geographic commentary, and management discussion.
 
-## Your Task
+## Task
 
 Build a local agentic RAG system that can answer increasingly complex questions about the provided companies and filings.
 
@@ -90,72 +80,7 @@ Your system should:
 ## Submission Guidelines
 
 - Submit within the deadline provided by your recruiter.
-- You may use any Fireworks model and additional framework, database, or vector store.
+- You may use any model and additional framework, database, or vector store.
 - You may use the internet, documentation, third-party packages, and AI coding tools.
 - If you use AI assistance, mention how in your report.
 - Keep external API usage to a reasonable prototype budget.
-
-## Required Deliverables
-
-- A zip file containing your implementation.
-- A `README` in your submission with exact local run instructions, required environment variables, and any setup steps.
-- A local interactive entry point so a reviewer can ask ad hoc questions.
-- A `dev_answers.json` file with your answers to the 10 development questions.
-- A short report, about 1 to 2 pages, covering:
-  - what you built
-  - how the system is structured
-  - how you retrieve from SQL and PDFs
-  - how you evaluate the system
-  - what trade-offs you made and why
-  - what you would improve with more time
-
-## `dev_answers.json` Format
-
-Create `dev_answers.json` by copying `questions/dev_answers_example.json`, then fill in your answers as a JSON object keyed by question ID:
-
-```json
-{
-  "q_001": "<your answer>",
-  "q_006": "<your answer>",
-  "q_008": "<your answer>"
-}
-```
-
-Answers may be short or long depending on the question. For synthesis questions, concise but well-supported answers are preferred.
-
-Because the dev answer key is public, `dev_answers.json` is not the hidden evaluation target. We still ask you to submit it so we can see the exact outputs your final system produced on the public development set.
-
-## Getting Started
-
-Run:
-
-```bash
-./setup.sh
-```
-
-What `setup.sh` does:
-
-- creates a local virtual environment with `uv`
-- installs setup and starter dependencies
-- downloads the SEC companyfacts JSON if needed
-- renders the six 10-K PDFs if needed
-- builds `data/financials.db` if needed
-
-Then inspect:
-
-- `data/financials.db`
-- `data/pdfs/`
-- `questions/dev_questions.json`
-- `questions/dev_questions_with_answers.json`
-
-You should use the public answer key to design your own evaluation approach for the dev set.
-
-## How We Will Review
-
-We will review your submission using:
-
-- the quality of the local interactive system
-- your ability to route between SQL and PDF-based evidence
-- how thoughtfully you evaluate your system against the public dev set
-- the clarity of your report and trade-off discussion
-- an internal held-out evaluation set
