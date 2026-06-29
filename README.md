@@ -63,24 +63,3 @@ The SQLite database includes these tables:
 - `geographic_revenue`: revenue by geography
 
 The filings provide the narrative context needed for questions about risks, strategy, segment definitions, geographic commentary, and management discussion.
-
-## Task
-
-Build a local agentic RAG system that can answer increasingly complex questions about the provided companies and filings.
-
-Your system should:
-
-- run locally on a reviewer's machine
-- support interactive use (e.g., with a simple UI)
-- expose an HTTP API at `http://localhost:8000/api/chat` that accepts `POST` requests with `{"question": "..."}` and returns the answer either as JSON with a top-level `answer` or `content` field (for example, `{"answer": "..."}`) or as an SSE stream with an `answer` event whose data is `{"content": "..."}`.
-- route questions to the right source or sources
-- return grounded answers that make it easy to inspect evidence
-- handle both straightforward retrieval and multi-step reasoning
-
-## Submission Guidelines
-
-- Submit within the deadline provided by your recruiter.
-- You may use any model and additional framework, database, or vector store.
-- You may use the internet, documentation, third-party packages, and AI coding tools.
-- If you use AI assistance, mention how in your report.
-- Keep external API usage to a reasonable prototype budget.
